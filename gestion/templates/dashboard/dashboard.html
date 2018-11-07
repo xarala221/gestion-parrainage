@@ -2,50 +2,69 @@
 
 {% block content %}
 
-<div class="jumbotron jumbotron-fluid">
-  <div class="container">
-    <h1 class="display-4">Gerer votre parrainage</h1>
-    <p class="lead">Résultat total : <span class="badge badge-primary">2334</span> </p>
-  </div>
-</div>
+{% if user.is_authenticated and request.user.is_superuser %}
+{% include "partials/_jumbotron.html" %}
+
   <div class="row">
     <div class="col-md-3">
       <div class="card">
         <ul class="list-group list-group-flush">
-          <li class="list-group-item">Dakar <span class="badge badge-primary">4</span>
+          <li class="list-group-item">
+            Dakar <span class="badge badge-primary">{{ dakar }}</span>
           </li>
-          <li class="list-group-item">Dapibus ac facilisis in</li>
-          <li class="list-group-item">Vestibulum at eros</li>
+          <li class="list-group-item">
+              Diourbel <span class="badge badge-primary">{{ diourbel }}</span>
+          </li>
+          <li class="list-group-item">
+              Fatick <span class="badge badge-primary">{{ fatick }}</span>
+          </li>
         </ul>
       </div>
     </div>
     <div class="col-md-3">
       <div class="card">
         <ul class="list-group list-group-flush">
-          <li class="list-group-item">Dakar <span class="badge badge-primary">4</span>
+          <li class="list-group-item">
+            Kaffrine <span class="badge badge-primary">{{ kaffrine }}
+            </span>
           </li>
-          <li class="list-group-item">Dapibus ac facilisis in</li>
-          <li class="list-group-item">Vestibulum at eros</li>
+          <li class="list-group-item">
+              Kaolack <span class="badge badge-primary">{{ kaolack }}</span>
+          </li>
+          <li class="list-group-item">
+              Kedougou <span class="badge badge-primary">{{ kedougou }}</span>
+          </li>
         </ul>
       </div>
     </div>
     <div class="col-md-3">
       <div class="card">
         <ul class="list-group list-group-flush">
-          <li class="list-group-item">Dakar <span class="badge badge-primary">4</span>
+          <li class="list-group-item">
+            Matam <span class="badge badge-primary">{{ matam }}
+            </span>
           </li>
-          <li class="list-group-item">Dapibus ac facilisis in</li>
-          <li class="list-group-item">Vestibulum at eros</li>
+          <li class="list-group-item">
+              Saint-louis <span class="badge badge-primary">{{ saint_louis }}</span>
+          </li>
+          <li class="list-group-item">
+              Sédhiou <span class="badge badge-primary">{{ sedhiou }}</span>
+          </li>
         </ul>
       </div>
     </div>
     <div class="col-md-3">
       <div class="card">
         <ul class="list-group list-group-flush">
-          <li class="list-group-item">Dakar <span class="badge badge-primary">4</span>
+          <li class="list-group-item">
+            Tambacounda <span class="badge badge-primary">{{ tambacounda }}</span>
           </li>
-          <li class="list-group-item">Dapibus ac facilisis in</li>
-          <li class="list-group-item">Vestibulum at eros</li>
+          <li class="list-group-item">
+              Thies <span class="badge badge-primary">{{ thies }}</span>
+          </li>
+          <li class="list-group-item">
+              Ziguinchor <span class="badge badge-primary">{{ ziguinchor }}</span>
+          </li>
         </ul>
       </div>
     </div>
@@ -54,14 +73,18 @@
     <div class="col-md-3">
       <div class="card">
         <ul class="list-group list-group-flush">
-          <li class="list-group-item">Dakar <span class="badge badge-primary">4</span>
+          <li class="list-group-item">
+            Kolda <span class="badge badge-primary">{{ kolda }}
+            </span>
           </li>
-          <li class="list-group-item">Dapibus ac facilisis in</li>
-          <li class="list-group-item">Vestibulum at eros</li>
+          <li class="list-group-item">
+              Louga <span class="badge badge-primary">{{ louga }} </span>
+          </li>
+          
         </ul>
       </div>
     </div>
     
   </div>
-
+  {% endif %}
 {% endblock  %}

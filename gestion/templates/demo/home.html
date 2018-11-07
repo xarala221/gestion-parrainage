@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+{% if user.is_authenticated and request.user.is_superuser %}
+{% include "partials/_jumbotron.html" %}
+{% else %}
+<div class="jumbotron jumbotron-fluid" style="margin-top: 20px;">
+    <div class="container">
+      <h1 class="display-4">Gerer votre parrainage nouveau parrain <a href="{% url 'index' %}">ICI</a> </h1>
+    </div>
+  </div>
+{% endif %}
+
+
+{% endblock  %}

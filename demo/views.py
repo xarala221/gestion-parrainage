@@ -8,7 +8,7 @@ from django.utils.http import is_safe_url
 from .models import *
 from .forms import LoginForm
 
-
+@login_required(login_url='/sign_in/')
 def index(request):
   context = {}
   return render(request, "demo/index.html", context)
@@ -50,57 +50,65 @@ def log_out(request):
 
 @login_required(login_url='/sign_in/')
 def homepage(request):
-    # total = MonElecteur.objects.all().count()
+    total = Parraine.objects.all().count()
+    context = {
+        'total':total
+    }
+    return render(request, "demo/home.html", context)
+
+
+@login_required(login_url='/sign_in/')
+def analyse(request):
+    total = Parraine.objects.all().count()
     # print("Total ", total)
-    # dakar = MonElecteur.objects.filter(region="Dakar").count()
+    dakar = Parraine.objects.filter(region__iexact="Dakar").count()
     # print("dakar ", dakar)
-    # diourbel = MonElecteur.objects.filter(region="Diourbel").count()
+    diourbel = Parraine.objects.filter(region__iexact="Diourbel").count()
     # print("Diourbel ", diourbel)
-    # fatick = MonElecteur.objects.filter(region="Fatick").count()
+    fatick = Parraine.objects.filter(region__iexact="Fatick").count()
     # print("Fatick ", fatick)
-    # kaffrine = MonElecteur.objects.filter(region="Kaffrine").count()
+    kaffrine = Parraine.objects.filter(region__iexact="Kaffrine").count()
     # print("Kaffrine ", kaffrine)
-    # kaolack = MonElecteur.objects.filter(region="Kaolack").count()
+    kaolack = Parraine.objects.filter(region__iexact="Kaolack").count()
     # print("kaolack ", kaolack)
-    # kedougou = MonElecteur.objects.filter(region="Kédougou").count()
+    kedougou = Parraine.objects.filter(region__iexact="Kédougou").count()
     # print("kedougou ", kedougou)
-    # matam = MonElecteur.objects.filter(region="Matam").count()
+    matam = Parraine.objects.filter(region__iexact="Matam").count()
     # print("Matam ", matam)
-    # saint_louis = MonElecteur.objects.filter(region="Saint-Louis").count()
+    saint_louis = Parraine.objects.filter(region__iexact="Saint-Louis").count()
     # print("saint_louis ", saint_louis)
-    # sedhiou = MonElecteur.objects.filter(region="Sédhiou").count()
+    sedhiou = Parraine.objects.filter(region__iexact="Sédhiou").count()
     # print("Sédhiou ", sedhiou)
-    # tambacounda = MonElecteur.objects.filter(region="Tambacounda").count()
+    tambacounda = Parraine.objects.filter(region__iexact="Tambacounda").count()
     # print("Tambacounda ", tambacounda)
-    # thies = MonElecteur.objects.filter(region="Thiès").count()
+    thies = Parraine.objects.filter(region__iexact="Thiès").count()
     # print("thies ", thies)
-    # ziguinchor = MonElecteur.objects.filter(region="Ziguinchor").count()
+    ziguinchor = Parraine.objects.filter(region__iexact="Ziguinchor").count()
     # print("Ziguinchor ", ziguinchor)
-    # kolda = MonElecteur.objects.filter(region="Kolda").count()
+    kolda = Parraine.objects.filter(region__iexact="Kolda").count()
     # print("Kolda ", kolda)
-    # louga = MonElecteur.objects.filter(region="Louga").count()
+    louga = Parraine.objects.filter(region__iexact="Louga").count()
     # print("Louga ", louga)
     context = {
-        # 'dakar':dakar,
-        # 'diourbel':diourbel,
-        # 'fatick':fatick,
-        # 'kaffrine':kaffrine,
-        # 'kaolack':kaolack,
-        # 'kedougou':kedougou,
-        # 'matam':matam,
-        # 'saint_louis':saint_louis,
-        # 'sedhiou':sedhiou,
-        # 'tambacounda':tambacounda,
-        # 'thies':thies,
-        # 'ziguinchor':ziguinchor,
-        # 'kolda':kolda,
-        # 'louga':louga,
-        # 'total':total
+        'dakar':dakar,
+        'diourbel':diourbel,
+        'fatick':fatick,
+        'kaffrine':kaffrine,
+        'kaolack':kaolack,
+        'kedougou':kedougou,
+        'matam':matam,
+        'saint_louis':saint_louis,
+        'sedhiou':sedhiou,
+        'tambacounda':tambacounda,
+        'thies':thies,
+        'ziguinchor':ziguinchor,
+        'kolda':kolda,
+        'louga':louga,
+        'total':total
 
 
     }
     return render(request, "dashboard/dashboard.html", context)
-
 
 
 # search view 

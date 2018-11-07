@@ -36,13 +36,13 @@
                       +'<input type="hidden" name="numero_identification" value='+jsonData[i]["fields"]["numero_identification"]+' class="form-control" />'
                       +'<input type="hidden" name="commune" value='+jsonData[i]["fields"]["commune"]+' class="form-control" />'
                       +'<input type="hidden" name="departement" value='+jsonData[i]["fields"]["departement"]+' class="form-control" />'
-                    +'<input type="text" name="nom" value='+jsonData[i]["fields"]["nom"]+' class="form-control" />'
+                    +'<input type="text" name="nom" value='+jsonData[i]["fields"]["nom"]+' class="form-control" disabled />'
                     +'</td>'
                   +'<td>'
-                    +'<input type="text" name="prenom" value='+jsonData[i]["fields"]["prenom"]+' class="form-control" />'
+                    +'<input type="text" name="prenom" value='+jsonData[i]["fields"]["prenom"]+' class="form-control" disabled />'
                   +'</td>'
                   +'<td>'
-                    +'<input type="text" name="region" value='+jsonData[i]["fields"]["region"]+' class="form-control" />'
+                    +'<input type="text" name="region" value='+jsonData[i]["fields"]["region"]+' class="form-control" disabled />'
                   +'</td>'
 
                   +'<td>'
@@ -101,13 +101,10 @@ $(document).on("click", ".save_person", function () {
   </script>
 {% endblock %}
 {% block content %}
-<div class="container">
-  <h1 class="display-4">Gerer votre parrainage</h1>
-  <p class="lead">text a changer.</p>
-</div>
+
 
 <hr display="4" class="m-t-20">
-
+{% if user.is_authenticated %}
   <div class="row">
     <div class="col-md-6">
       <div class="form-group">
@@ -143,4 +140,5 @@ $(document).on("click", ".save_person", function () {
 
     </div>
   </div>
+  {% endif %}
 {% endblock  %}
