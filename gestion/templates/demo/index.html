@@ -1,0 +1,146 @@
+{% extends "base.html" %}
+{% block extrajs %}
+<script type="text/javascript">
+
+  $( document ).ready( function() {
+    console.log("ready")
+      $( '#q' ).keyup( function() {
+          q = $( '#q' ).val();
+          $( '#results' ).html( '&nbsp;' ).load( "{% url 'search' %}?q=" + q );
+      });
+  });
+
+  $(document).on('click', '.my_result', function () {
+    const person_id = $(this).attr("person_id")
+    console.log("id ", person_id)
+
+    $.ajax({
+      type:"GET",
+      url: '{% url "get_person_info" %}',
+      data: {
+        'person_id' : person_id,
+        csrfmiddlewaretoken: '{{ csrf_token }}'
+      },
+      dataType: 'json',
+      success: function (data) {
+        const jsonData = JSON.parse(data)
+        console.log('client_info : ', jsonData)
+
+        var htmlContent = ''
+          for(i= 0 ; i < jsonData.length; i++ ) {
+
+
+            htmlContent += '<tr>'
+                  +'<td>'
+                      +'<input type="hidden" name="numero_electeur" value='+jsonData[i]["fields"]["numero_electeur"]+' class="form-control" />'
+                      +'<input type="hidden" name="numero_identification" value='+jsonData[i]["fields"]["numero_identification"]+' class="form-control" />'
+                      +'<input type="hidden" name="commune" value='+jsonData[i]["fields"]["commune"]+' class="form-control" />'
+                      +'<input type="hidden" name="departement" value='+jsonData[i]["fields"]["departement"]+' class="form-control" />'
+                    +'<input type="text" name="nom" value='+jsonData[i]["fields"]["nom"]+' class="form-control" />'
+                    +'</td>'
+                  +'<td>'
+                    +'<input type="text" name="prenom" value='+jsonData[i]["fields"]["prenom"]+' class="form-control" />'
+                  +'</td>'
+                  +'<td>'
+                    +'<input type="text" name="region" value='+jsonData[i]["fields"]["region"]+' class="form-control" />'
+                  +'</td>'
+
+                  +'<td>'
+                      + '<button type="button" id="create_person" person_id='+jsonData[i]["pk"] +' class="btn btn-success btn-sm save_person">Valider</button>'
+                  +'</td>'
+               
+
+
+                +'</tr>'
+          }
+          $('.packages_list').html(htmlContent)
+      }
+    })
+})
+
+$(document).on("click", ".save_person", function () {
+    $.ajax({
+      type:"POST",
+      url: '{% url "create_person" %}',
+      data: {
+
+        'numero_electeur' :$("input[name=numero_electeur]").val(),
+        'numero_identification' :$("input[name=numero_identification]").val(),
+        'nom' :$("input[name=nom]").val(),
+        'prenom' :$("input[name=prenom]").val(),
+        'region' :$("input[name=region]").val(),
+        'commune' :$("input[name=commune]").val(),
+        'departement' :$("input[name=departement]").val(),
+        
+
+        csrfmiddlewaretoken: '{{ csrf_token }}'
+
+      },
+      dataType: 'json',
+      success: function (data) {
+        console.log('returned data: ', data)
+        if (data['has_error'] == - 1) {
+          $('.error_new_package').show()
+          $('.error_new_package').html(data['error'])
+        }else{
+
+          console.log("data ", data)
+          alert("enregistrer avec succes")
+          document.location.reload()
+
+        }
+
+      }
+    })
+  
+
+});
+
+
+  
+  </script>
+{% endblock %}
+{% block content %}
+<div class="container">
+  <h1 class="display-4">Gerer votre parrainage</h1>
+  <p class="lead">text a changer.</p>
+</div>
+
+<hr display="4" class="m-t-20">
+
+  <div class="row">
+    <div class="col-md-6">
+      <div class="form-group">
+          <form class="form-inline">
+              <div class="input-group">
+                <input type="text" id="q" name="keyword" class="form-control search" placeholder="numéro électeur" aria-label="Username" aria-describedby="basic-addon1">
+              </div>
+            </form>
+      </div>
+      <div class="margin">
+          <div id="results"></div>
+      </div>
+ 
+    </div>
+    <div class="col-md-6">
+
+        <table id="myTable" class="table table-bordered table-striped">
+            <thead>
+                <tr>
+                    <th>Nom</th>
+                    <th>Prénom</th>
+                    <th>Région</th>
+                    <th>Actions</th>
+  
+  
+                </tr>
+            </thead>
+            <tbody class="packages_list">
+  
+                
+            </tbody>
+        </table>
+
+    </div>
+  </div>
+{% endblock  %}
